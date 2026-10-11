@@ -1,26 +1,315 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ==========================================================================
+   DESIGN SYSTEM — SMAS Kesatuan Bogor
+   Catatan: palet ini adalah USULAN DESAIN, bukan identitas visual resmi sekolah.
+   Untuk Tailwind v4 (konfigurasi CSS-first, tanpa tailwind.config.js).
+
+   Breakpoint (default Tailwind, dipakai apa adanya):
+   - mobile  : < 640px   (tanpa prefix)
+   - tablet  : sm 640px, md 768px
+   - desktop : lg 1024px, xl 1280px
+   ========================================================================== */
+
+/* --- Design tokens ------------------------------------------------------- */
+@theme static {
+  /* Navy — warna utama */
+  --color-navy-50: #f3f6fb;
+  --color-navy-100: #e5ebf5;
+  --color-navy-200: #c9d5e8;
+  --color-navy-300: #9fb3d3;
+  --color-navy-400: #6d88b6;
+  --color-navy-500: #4a6a9b;
+  --color-navy-600: #38527e;
+  --color-navy-700: #2c4165;
+  --color-navy-800: #213250;
+  --color-navy-900: #172640;
+  --color-navy-950: #0e1829;
+
+  /* Emas — aksen (dipakai hemat) */
+  --color-gold-50: #fbf7ec;
+  --color-gold-100: #f5ecd0;
+  --color-gold-200: #ebd9a3;
+  --color-gold-300: #dfc27a;
+  --color-gold-400: #cfa953;
+  --color-gold-500: #b8913a;
+  --color-gold-600: #9a7628;
+  --color-gold-700: #7a5d20;
+
+  /* Permukaan, teks, dan garis */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f5f7fb;
+  --color-ink: #162033;
+  --color-muted: #566176;
+  --color-line: #dde3ed;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  /* Shadow — lembut, bernuansa navy */
+  --shadow-soft: 0 1px 2px rgb(23 38 64 / 0.08);
+  --shadow-card: 0 1px 2px rgb(23 38 64 / 0.04), 0 4px 16px rgb(23 38 64 / 0.06);
+  --shadow-card-hover: 0 2px 4px rgb(23 38 64 / 0.06),
+    0 12px 32px rgb(23 38 64 / 0.12);
 }
 
+/* Font diambil dari next/font di layout.js */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), ui-serif, Georgia, "Times New Roman",
+    serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* --- Gaya dasar ---------------------------------------------------------- */
+@layer base {
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-surface font-sans text-ink antialiased;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-semibold text-navy-900;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+  }
+
+  h2 {
+    font-size: clamp(1.625rem, 1.25rem + 1.5vw, 2.5rem);
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+    line-height: 1.3;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-gold-200);
+    color: var(--color-navy-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --- Komponen ------------------------------------------------------------ */
+@layer components {
+  /* Container & section */
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-14 sm:py-16 lg:py-24;
+  }
+
+  .section-alt {
+    @apply bg-surface-alt;
+  }
+
+  .section-dark {
+    @apply bg-navy-900 text-navy-100;
+  }
+
+  .section-dark h1,
+  .section-dark h2,
+  .section-dark h3,
+  .section-dark h4 {
+    @apply text-white;
+  }
+
+  .section-header {
+    @apply mb-10 max-w-2xl sm:mb-12 lg:mb-14;
+  }
+
+  .section-header-center {
+    @apply mx-auto text-center;
+  }
+
+  .section-header-center .eyebrow {
+    @apply justify-center;
+  }
+
+  .eyebrow {
+    @apply mb-3 inline-flex items-center gap-3 text-xs font-semibold uppercase text-gold-700;
+    letter-spacing: 0.18em;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-8 bg-gold-500;
+  }
+
+  .section-dark .eyebrow {
+    @apply text-gold-300;
+  }
+
+  .lead {
+    @apply mt-4 text-base text-muted sm:text-lg;
+  }
+
+  .section-dark .lead {
+    @apply text-navy-200;
+  }
+
+  /* Tombol: .btn + satu varian. Contoh: class="btn btn-primary" */
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-transparent px-5 py-3 text-sm font-semibold leading-none no-underline transition-colors duration-200;
+    min-height: 2.75rem;
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    @apply pointer-events-none opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-navy-900 text-white shadow-soft hover:bg-navy-800 active:bg-navy-950;
+  }
+
+  .btn-secondary {
+    @apply border-navy-900 bg-white text-navy-900 hover:bg-navy-50 active:bg-navy-100;
+  }
+
+  /* Untuk latar gelap (hero atau section navy) */
+  .btn-gold {
+    @apply bg-gold-500 text-navy-950 hover:bg-gold-400 active:bg-gold-600;
+  }
+
+  .btn-outline-light {
+    @apply border-white/40 text-white hover:border-white hover:bg-white/10;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2;
+    min-height: 2.25rem;
+  }
+
+  .btn-lg {
+    @apply px-7 py-3.5 text-base;
+  }
+
+  /* Kartu umum */
+  .card {
+    @apply rounded-xl border border-line bg-white p-6 shadow-card;
+  }
+
+  /* Grid kartu: 1 kolom mobile, 2 tablet, 3 desktop */
+  .grid-cards {
+    @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8;
+  }
+
+  /* Kartu berita.
+     Struktur:
+     <article class="news-card">
+       <div class="news-card-media"><img ... /><span class="news-card-badge">Kategori</span></div>
+       <div class="news-card-body">
+         <p class="news-card-meta">12 Oktober 2026</p>
+         <h3 class="news-card-title">Judul</h3>
+         <p class="news-card-excerpt">Ringkasan</p>
+         <Link class="news-card-link" href="...">Baca selengkapnya</Link>
+       </div>
+     </article>
+     Link memakai pola stretched link, jadi seluruh kartu bisa diklik. */
+  .news-card {
+    @apply relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-white shadow-card transition duration-300 ease-out hover:shadow-card-hover motion-safe:hover:-translate-y-1;
+  }
+
+  .news-card-media {
+    @apply relative aspect-[16/9] overflow-hidden bg-navy-100;
+  }
+
+  .news-card-media img {
+    @apply h-full w-full object-cover;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .news-card-media img {
+      transition: transform 500ms ease-out;
+    }
+
+    .news-card:hover .news-card-media img {
+      transform: scale(1.04);
+    }
+  }
+
+  .news-card-badge {
+    @apply absolute left-4 top-4 rounded-md bg-navy-900/90 px-2.5 py-1 text-xs font-semibold text-white;
+  }
+
+  .news-card-body {
+    @apply flex flex-1 flex-col gap-3 p-5 sm:p-6;
+  }
+
+  .news-card-meta {
+    @apply text-xs font-medium uppercase text-gold-700;
+    letter-spacing: 0.08em;
+  }
+
+  .news-card-title {
+    @apply line-clamp-2 text-lg leading-snug text-navy-900 transition-colors sm:text-xl;
+  }
+
+  .news-card:hover .news-card-title {
+    @apply text-navy-700;
+  }
+
+  .news-card-excerpt {
+    @apply line-clamp-3 text-sm leading-relaxed text-muted;
+  }
+
+  .news-card-link {
+    @apply mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-semibold text-navy-800 no-underline;
+  }
+
+  .news-card-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .news-card-link::after {
+    content: "\2192";
+    display: inline-block;
+    transition: transform 200ms ease-out;
+  }
+
+  .news-card:hover .news-card-link::after {
+    transform: translateX(3px);
+  }
 }
