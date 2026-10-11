@@ -10,9 +10,8 @@ const FOOTER_LINKS = [
 // kode pos). Lengkapi atau koreksi di sini setelah dikonfirmasi ke pihak sekolah.
 const ADDRESS_LINES = ["Jalan Raya Pajajaran, Pulo Armin", "Kota Bogor, Jawa Barat"];
 
-export default async function Footer() {
-  "use cache";
-  const year = new Date().getFullYear();
+export default function Footer() {
+  const year = 2026;
 
   return (
     <footer className="bg-navy-950 text-navy-200">
