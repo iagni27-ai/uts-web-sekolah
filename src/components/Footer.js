@@ -11,7 +11,7 @@ const FOOTER_LINKS = [
 const ADDRESS_LINES = ["Jalan Raya Pajajaran, Pulo Armin", "Kota Bogor, Jawa Barat"];
 
 export default function Footer() {
-  // Dihitung di server saat build/render, jadi tahunnya mengikuti waktu build.
+  "use cache";
   const year = new Date().getFullYear();
 
   return (
